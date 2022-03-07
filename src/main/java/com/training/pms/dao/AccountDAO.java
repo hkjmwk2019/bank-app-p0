@@ -7,10 +7,11 @@ import com.training.pms.model.Login;
 
 public interface AccountDAO {
 	public boolean addMoreBankAccount(String username, String password);
-	public boolean withdrawFromAccount(Account account,double amount);
-	public boolean transferToOtherAccount(Account account,int otheraccountid, double amount);
-	public boolean depositToAccount(Account account,double amount);
-	public Account searchAccountByCustomerNamePassword(String accountname, String password);
+	public boolean withdrawFromAccount(Account account,int amount);
+	public boolean transferToOtherAccount(Account account,int otheraccountid,int amount);
+	public boolean depositToAccount(Account account,int amount);
+	
 	//public Account addBankAccount(String accountname, String password);
-     //public List<Account> searchAccountByCustomerNamePassword(String username, String password);
+    public List<Account> searchAccountByCustomerNamePassword(String username, String password);
+   public Account searchAccountByCustomerNamePassword_02(String accountname, String password);
 }

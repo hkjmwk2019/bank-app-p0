@@ -43,9 +43,11 @@ begin
 end;$$
 
 ---------------------------------------
+
+ receiver int, 
 create or replace procedure withdraw(
    sender int,
-   receiver int, 
+  
    amount dec
 )
 language plpgsql    
@@ -60,8 +62,9 @@ begin
 end;$$
 
 --------------------
+sender int,
 create or replace procedure deposit(
-   sender int,
+   
    receiver int, 
    amount dec
 )

@@ -1,3 +1,4 @@
+
 package com.training.pms.product_app_alstrom;
 
 import java.io.IOException;
@@ -40,7 +41,7 @@ public class BankProductApp
 		int loginId=0;
 		int tuserOrEmployStatus= 0;
 		int accountId=0;
-		double amount=0;
+		int amount=0;
 		
 		String userName=null;
 		String password= null;
@@ -71,11 +72,12 @@ public class BankProductApp
 				case 1:		
 					System.out.println("======================================================= ");
 					System.out.println("Welcome Customers  ");
-					System.out.println("Please enter your user name: ");
+					System.out.print("Please enter your user name: ");
 					tuserName = sc.next();
 				
-					System.out.println("Please enter your user password: ");
+					System.out.print("Please enter your user password: ");
 					tpassword = sc.next();
+					System.out.println("======================================================= ");
 					
 					loginDAO.bankapplicant(tuserName, tpassword);	
 					
@@ -156,12 +158,15 @@ public class BankProductApp
 
 			
 					   /* *** **********************************************************
-					    *  Employ   Screen
+					    *    Employ   Screen
 					    *  
 					    * **************************************************************** */
 					   System.out.println("====================================================");
-					   System.out.println("O N L Y    F O R   E M P L O Y E E ");
-					   System.out.println("10. Approve/Deny customer and add Customer's First Accounts ");
+					   System.out.println("=                                                  =");
+					   System.out.println("=      O N L Y    F O R   E M P L O Y E E          =");
+					   System.out.println("=                                                  =");
+					   System.out.println("====================================================");
+					   System.out.println("10. Approve/Deny customer ");
 					   System.out.println("11. Search Customer's All accounts by name and passowrd ");
 					   System.out.println("9. E  X  I  T  ");
 					   System.out.println("====================================================");
@@ -231,10 +236,10 @@ public class BankProductApp
 						
 							System.out.println("Please enter customer password : ");
 							tpassword=sc.next();
-							account= accountDAO.searchAccountByCustomerNamePassword(tcustomerName, tpassword);
+							accounts= accountDAO.searchAccountByCustomerNamePassword(tcustomerName, tpassword);
 						
 							System.out.println("print the custmoer's all account information:");
-							System.out.println(account);
+							System.out.println(accounts);
 							break;
 						
 			
@@ -255,7 +260,10 @@ public class BankProductApp
 		   while(true) 
 			{
 			   System.out.println("====================================================");
-			   System.out.println("W E L C O M E     C U S T O M E R  ");
+			   System.out.println("=                                                  =");
+			   System.out.println("=     W E L C O M E     C U S T O M E R            =");
+			   System.out.println("=                                                  =");
+			   System.out.println("====================================================");
 			   System.out.println("1. View all Your Accounts Information  ");
 			   System.out.println("2. Withdraw from Personal Account  ");
 			   System.out.println("3. Deposit to Personal Account ");
@@ -266,22 +274,29 @@ public class BankProductApp
 			   System.out.println("Please enter your choice : ");
 			   subchoice = sc.nextInt();
 			   
-			   System.out.println("Welcome, please enter your name and password.");
-			   System.out.println("Please enter your name : ");
-			   tcustomerName=sc.next();
+			  // System.out.println("Welcome, please enter your name and password.");
+			 //  System.out.println("Please enter your name : ");
+			 //  tcustomerName=sc.next();
 		
-				System.out.println("Please enter your password : ");
-				tpassword=sc.next();
+			 //  System.out.println("Please enter your password : ");
+			//	tpassword=sc.next();
 			   
 			   
 				switch(subchoice)
 				{
 
 					case 1:
+						 System.out.println("Welcome, please enter your name and password.");
+						  System.out.print ("Please enter your name : ");
+						  tcustomerName=sc.next();
+					
+						  System.out.println("Please enter your password : ");
+							tpassword=sc.next();
 
 						System.out.println("===================================================== ");
+						//System.out.println("print all your account information:");
 						
-						account= accountDAO.searchAccountByCustomerNamePassword(tcustomerName, tpassword);
+						accounts= accountDAO.searchAccountByCustomerNamePassword(tcustomerName, tpassword);
 				
 						System.out.println("print all your account information:");
 						System.out.println(accounts);
@@ -289,14 +304,22 @@ public class BankProductApp
 						break;
 					
 					case 2:
-						
-						account= accountDAO.searchAccountByCustomerNamePassword(tcustomerName, tpassword);
-						
-						System.out.println("Withdraw from Personal Account");
+						System.out.println("Welcome, please enter your name and password.");
+						  System.out.print("Please enter your name : ");
+						  tcustomerName=sc.next();
+					
+						  System.out.println("Please enter your password : ");
+						  tpassword=sc.next();
+							
+						  accounts= accountDAO.searchAccountByCustomerNamePassword(tcustomerName, tpassword);	
+						  account = accountDAO.searchAccountByCustomerNamePassword_02(tcustomerName, tpassword);
+							
+						System.out.println("Before withdraw your balance is : " + account.getBalance());
+																				
 						wantRun = true;
 						while (wantRun) {
 							System.out.println("The amount you want withdrawn :");
-							amount = sc.nextDouble();
+							amount = sc.nextInt();
 							// System.out.println("amount"+amount);
 
 							if (amount <= account.getBalance() && amount >= 0) {
@@ -311,6 +334,8 @@ public class BankProductApp
 						
 						boolean isValidWithdraw = accountDAO.withdrawFromAccount(account, amount);
 						
+					
+						
 
 						if (!isValidWithdraw) {
 							System.out.println("Withdraw was unsuccessful. Try again");
@@ -320,37 +345,69 @@ public class BankProductApp
 							continue;
 						}
 						
-						account= accountDAO.searchAccountByCustomerNamePassword(tcustomerName, tpassword);
-						System.out.println("Your current account infomation is:");
-						System.out.println(account);
+						accounts= accountDAO.searchAccountByCustomerNamePassword(tcustomerName, tpassword);
+						account = accountDAO.searchAccountByCustomerNamePassword_02(tcustomerName, tpassword);
+						
+						System.out.println("After withdraw your balance is : " + account.getBalance() );
+						
 						
 						break;
 					
 					case 3: //3. Deposit to Personal Account 
-						account= accountDAO.searchAccountByCustomerNamePassword(tcustomerName, tpassword);
 						
+						System.out.println("Welcome, please enter your name and password.");
+						 System.out.print("Please enter your name : ");
+						  tcustomerName=sc.next();
+					
+						 System.out.println("Please enter your password : ");
+						tpassword=sc.next();
+							
+							
+						accounts= accountDAO.searchAccountByCustomerNamePassword(tcustomerName, tpassword);
+						
+						account = accountDAO.searchAccountByCustomerNamePassword_02(tcustomerName, tpassword);
+						
+						System.out.println("Before Deposit your balance is : " + account.getBalance());
+																	
 						System.out.println("Deposit to Personal Account");
 						System.out.println("The amount you want Deposit :");
-						amount = sc.nextDouble();
+						amount = sc.nextInt();
 						
 						boolean isValidDeposit = accountDAO.depositToAccount(account, amount);
 						
-						account= accountDAO.searchAccountByCustomerNamePassword(tcustomerName, tpassword);
+						accounts= accountDAO.searchAccountByCustomerNamePassword(tcustomerName, tpassword);
+						account = accountDAO.searchAccountByCustomerNamePassword_02(tcustomerName, tpassword);
 						
-						System.out.println("Your account infomation is:");
-						System.out.println(account);
+						System.out.println("After deposit your balance is : " + account.getBalance() );
+						
 						break;
 						
 					case 4:
-						account= accountDAO.searchAccountByCustomerNamePassword(tcustomerName, tpassword);
+						System.out.println("Welcome, please enter your name and password.");
+						  System.out.print("Please enter your name : ");
+						  tcustomerName=sc.next();
+					
+						  System.out.println("Please enter your password : ");
+						tpassword=sc.next();
 						
-						System.out.println("Deposit to Personal Account");
-						System.out.println("The amount you want Deposit :");
-						amount = sc.nextDouble();
+						  accounts= accountDAO.searchAccountByCustomerNamePassword(tcustomerName, tpassword);							
+						  account = accountDAO.searchAccountByCustomerNamePassword_02(tcustomerName, tpassword);
 						
-						System.out.println("The other account you want to transfer :");
+						System.out.print("##  The other account you want to transfer to : ");
 						int otheraccountId= sc.nextInt();
+						
+						
+						System.out.println("The amount you want to transfer : :");
+						amount = sc.nextInt();
+					    
+						System.out.println("##  Before transfer your balance is : " + account.getBalance());
+						
 						boolean isValidTransfer1 = accountDAO.transferToOtherAccount(account, otheraccountId, amount);
+						
+						 accounts= accountDAO.searchAccountByCustomerNamePassword(tcustomerName, tpassword);							
+						 account = accountDAO.searchAccountByCustomerNamePassword_02(tcustomerName, tpassword);
+						
+						 System.out.println("##  After transfer your balance is : " + account.getBalance());
 						
 						break;
 

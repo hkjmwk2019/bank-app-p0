@@ -170,12 +170,19 @@ public class LoginDAOImpl implements LoginDAO {
 				stat.setInt(1, applicantstatus);
 				// =============
 				ResultSet res = stat.executeQuery();
-				res.next();
 				
-				login2.setLoginId(res.getInt(1));
-				login2.setUsername(res.getString(2));
-				login2.setPassword(res.getString(3));
-				login2.setUserOrEmploy(res.getInt(4));
+				try {
+					res.next();
+					
+					login2.setLoginId(res.getInt(1));
+					login2.setUsername(res.getString(2));
+					login2.setPassword(res.getString(3));
+					login2.setUserOrEmploy(res.getInt(4));
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				
 				
 				res.close();
 				stat.close();
